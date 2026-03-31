@@ -1,0 +1,40 @@
+<div class="page-header flex justify-between items-center mb-4">
+  <h2>Médicos</h2>
+  <a routerLink="/dashboard/medicos/novo" class="btn btn-primary">
+    + Novo Médico
+  </a>
+</div>
+
+<div class="glass-card table-container">
+  <div *ngIf="isLoading" class="text-center">
+    <span class="spinner">↻</span> Carregando...
+  </div>
+  
+  <table class="table" *ngIf="!isLoading && medicos.length > 0">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>CRM</th>
+        <th>Especialidade</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medico of medicos">
+        <td>{{ medico.nome }}</td>
+        <td>{{ medico.email }}</td>
+        <td>{{ medico.crm }}</td>
+        <td style="text-transform: capitalize;">{{ medico.especialidade }}</td>
+        <td class="flex gap-4">
+          <button class="btn-icon text-primary" (click)="editarMedico(medico.id)" title="Editar">✏️</button>
+          <button class="btn-icon text-danger" (click)="excluirMedico(medico.id)" title="Excluir">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && medicos.length === 0" class="text-center text-muted">
+    Nenhum médico cadastrado.
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="page-header mb-4">
+  <h2>Gerenciamento de Consultas</h2>
+  <p class="text-muted">Agende e cancele consultas médicas do sistema.</p>
+</div>
+
+<div class="consulta-grid">
+  <!-- AGENDAR -->
+  <div class="glass-card">
+    <h3 class="mb-4">Agendar Consulta</h3>
+    <form (ngSubmit)="agendar()" #agendarForm="ngForm">
+      
+      <div class="form-group">
+        <label class="form-label" for="paciente">Paciente</label>
+        <select id="paciente" name="paciente" class="form-control" [(ngModel)]="agendamento.idPaciente" required>
+          <option [ngValue]="null">Selecione o paciente...</option>
+          <option *ngFor="let pac of pacientes" [ngValue]="pac.id">{{ pac.nome }} (CPF: {{ pac.cpf }})</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="medico">Médico (Opcional)</label>
+        <select id="medico" name="medico" class="form-control" [(ngModel)]="agendamento.idMedico">
+          <option [ngValue]="null">Qualquer médico disponível</option>
+          <option *ngFor="let med of medicos" [ngValue]="med.id">{{ med.nome }} - {{ med.especialidade }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="data">Data e Hora</label>
+        <input type="datetime-local" id="data" name="data" class="form-control" [(ngModel)]="agendamento.data" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!agendarForm.form.valid || isLoadingA">
+        <span *ngIf="!isLoadingA">Confirmar Agendamento</span>
+        <span *ngIf="isLoadingA">Aguarde...</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- CANCELAR -->
+  <div class="glass-card">
+    <h3 class="mb-4 text-danger">Cancelar Consulta</h3>
+    <form (ngSubmit)="cancelar()" #cancelarForm="ngForm">
+      
+      <div class="form-group">
+        <label class="form-label" for="idConsulta">ID da Consulta</label>
+        <input type="number" id="idConsulta" name="idConsulta" class="form-control" [(ngModel)]="cancelamento.idConsulta" required placeholder="Ex: 15" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="motivo">Motivo do Cancelamento</label>
+        <select id="motivo" name="motivo" class="form-control" [(ngModel)]="cancelamento.motivoCancelamento" required>
+          <option value="">Selecione o motivo...</option>
+          <option value="PACIENTE_DESISTIU">Paciente Desistiu</option>
+          <option value="MEDICO_CANCELOU">Médico Cancelou</option>
+          <option value="OUTROS">Outros</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-danger btn-block mt-4" [disabled]="!cancelarForm.form.valid || isLoadingC">
+        <span *ngIf="!isLoadingC">Efetuar Cancelamento</span>
+        <span *ngIf="isLoadingC">Aguarde...</span>
+      </button>
+    </form>
+  </div>
+
+</div>

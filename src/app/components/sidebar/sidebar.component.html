@@ -1,0 +1,20 @@
+<aside class="sidebar glass-card">
+  <div class="sidebar-brand">
+    <div class="logo-small"><span class="icon">⚕️</span></div>
+    <h3>Clinica.Med</h3>
+  </div>
+  <nav class="sidebar-nav">
+    <a routerLink="/dashboard/medicos" routerLinkActive="active" class="nav-item">
+      <span>👩‍⚕️ Médicos</span>
+    </a>
+    <a routerLink="/dashboard/pacientes" routerLinkActive="active" class="nav-item">
+      <span>🛌 Pacientes</span>
+    </a>
+    <a routerLink="/dashboard/consultas" routerLinkActive="active" class="nav-item">
+      <span>📅 Consultas</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-danger btn-block" (click)="onLogout()"> Sair </button>
+  </div>
+</aside>

@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="login-card glass-card animate-fade-in">
+    <div class="login-header">
+      <div class="logo">
+        <span class="icon">⚕️</span>
+      </div>
+      <h2>Clinica.Med</h2>
+      <p>Acesse o painel administrativo</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="alert alert-danger" *ngIf="errorMsg()">
+        {{ errorMsg() }}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="login">Login</label>
+        <input type="text" id="login" name="login" class="form-control" [(ngModel)]="loginData.login" required autocomplete="username" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" class="form-control" [(ngModel)]="loginData.senha" required autocomplete="current-password" />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid || isLoading()">
+        <span *ngIf="!isLoading()">Entrar no Sistema</span>
+        <span *ngIf="isLoading()" class="spinner">↻</span>
+      </button>
+    </form>
+  </div>
+</div>

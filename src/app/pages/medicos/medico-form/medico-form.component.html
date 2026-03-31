@@ -1,0 +1,95 @@
+<div class="page-header flex justify-between items-center mb-4">
+  <h2>{{ isEdicao ? 'Editar Médico' : 'Novo Médico' }}</h2>
+  <a routerLink="/dashboard/medicos" class="btn btn-danger">Voltar</a>
+</div>
+
+<div class="glass-card">
+  <div *ngIf="isLoading" class="text-center mb-4">
+    <span class="spinner">↻</span> Carregando...
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #medicoForm="ngForm" *ngIf="!isLoading">
+    
+    <div class="form-grid">
+      <!-- DADOS PRINCIPAIS -->
+      <div class="form-group">
+        <label class="form-label" for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="medico.nome" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail</label>
+        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="medico.email" required email />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" class="form-control" [(ngModel)]="medico.telefone" required />
+      </div>
+
+      <div class="form-group" *ngIf="!isEdicao">
+        <label class="form-label" for="crm">CRM</label>
+        <input type="text" id="crm" name="crm" class="form-control" [(ngModel)]="medico.crm" required />
+      </div>
+
+      <div class="form-group" *ngIf="!isEdicao">
+        <label class="form-label" for="especialidade">Especialidade</label>
+        <select id="especialidade" name="especialidade" class="form-control" [(ngModel)]="medico.especialidade" required>
+          <option value="">Selecione...</option>
+          <option value="ORTOPEDIA">Ortopedia</option>
+          <option value="CARDIOLOGIA">Cardiologia</option>
+          <option value="GINECOLOGIA">Ginecologia</option>
+          <option value="DERMATOLOGIA">Dermatologia</option>
+        </select>
+      </div>
+    </div>
+
+    <h3 class="mt-4">Endereço</h3>
+    <hr class="mb-4" style="border-color: rgba(255,255,255,0.1)">
+    
+    <div class="form-grid">
+      <div class="form-group" style="grid-column: span 2;">
+        <label class="form-label" for="logradouro">Logradouro</label>
+        <input type="text" id="logradouro" name="logradouro" class="form-control" [(ngModel)]="medico.endereco.logradouro" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="numero">Número</label>
+        <input type="text" id="numero" name="numero" class="form-control" [(ngModel)]="medico.endereco.numero" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="complemento">Complemento</label>
+        <input type="text" id="complemento" name="complemento" class="form-control" [(ngModel)]="medico.endereco.complemento" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bairro">Bairro</label>
+        <input type="text" id="bairro" name="bairro" class="form-control" [(ngModel)]="medico.endereco.bairro" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control" [(ngModel)]="medico.endereco.cidade" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="uf">UF</label>
+        <input type="text" id="uf" name="uf" class="form-control" [(ngModel)]="medico.endereco.uf" required maxlength="2" />
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="cep">CEP</label>
+        <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="medico.endereco.cep" required />
+      </div>
+    </div>
+
+    <div class="mt-4 flex justify-between">
+      <button type="button" class="btn btn-danger" routerLink="/dashboard/medicos">Cancelar</button>
+      <button type="submit" class="btn btn-success" [disabled]="!medicoForm.form.valid">
+        Salvar Médico
+      </button>
+    </div>
+
+  </form>
+</div>

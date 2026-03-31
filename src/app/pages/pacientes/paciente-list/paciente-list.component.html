@@ -1,0 +1,40 @@
+<div class="page-header flex justify-between items-center mb-4">
+  <h2>Pacientes</h2>
+  <a routerLink="/dashboard/pacientes/novo" class="btn btn-primary">
+    + Novo Paciente
+  </a>
+</div>
+
+<div class="glass-card table-container">
+  <div *ngIf="isLoading" class="text-center">
+    <span class="spinner">↻</span> Carregando...
+  </div>
+  
+  <table class="table" *ngIf="!isLoading && pacientes.length > 0">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let paciente of pacientes">
+        <td>{{ paciente.nome }}</td>
+        <td>{{ paciente.email }}</td>
+        <td>{{ paciente.cpf }}</td>
+        <td>{{ paciente.telefone }}</td>
+        <td class="flex gap-4">
+          <button class="btn-icon text-primary" (click)="editarPaciente(paciente.id)" title="Editar">✏️</button>
+          <button class="btn-icon text-danger" (click)="excluirPaciente(paciente.id)" title="Excluir">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && pacientes.length === 0" class="text-center text-muted">
+    Nenhum paciente cadastrado.
+  </div>
+</div>
