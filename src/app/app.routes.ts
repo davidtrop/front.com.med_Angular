@@ -7,6 +7,7 @@ import { MedicoFormComponent } from './pages/medicos/medico-form/medico-form.com
 import { PacienteListComponent } from './pages/pacientes/paciente-list/paciente-list.component';
 import { PacienteFormComponent } from './pages/pacientes/paciente-form/paciente-form.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -29,5 +30,5 @@ export const routes: Routes = [
       { path: '', redirectTo: 'medicos', pathMatch: 'full' },
     ],
   },
-  { path: '**', redirectTo: 'login' },
+  { path: '**', component: NotFoundComponent },
 ];

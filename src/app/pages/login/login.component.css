@@ -54,6 +54,21 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
+.invalid-feedback {
+  color: var(--danger, #ef4444);
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  display: block;
+}
+
+.is-invalid {
+  border-color: var(--danger, #ef4444) !important;
+}
+
+.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+}
+
 .spinner {
   display: inline-block;
   animation: spin 1s linear infinite;

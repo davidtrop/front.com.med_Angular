@@ -7,7 +7,7 @@ import { Medico } from '../models/medico.model';
   providedIn: 'root'
 })
 export class MedicoService {
-  private url = '/medicos';
+  private url = '/api/medicos';
 
   constructor(private http: HttpClient) { }
 

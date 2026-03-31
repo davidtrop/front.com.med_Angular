@@ -1,0 +1,16 @@
+<div class="not-found-container">
+  <div class="not-found-card glass-card animate-fade-in">
+    <div class="error-code">404</div>
+    <h2>Página não encontrada</h2>
+    <p>A página que você está procurando não existe ou foi removida.</p>
+    
+    <div class="countdown-container">
+      <div class="spinner">↻</div>
+      <p>Redirecionando em <strong>{{ timer() }}</strong> segundos...</p>
+    </div>
+    
+    <button class="btn btn-primary btn-block mt-3" (click)="redirect()">
+      Redirecionar Agora
+    </button>
+  </div>
+</div>

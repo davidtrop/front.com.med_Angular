@@ -8,22 +8,28 @@
       <p>Acesse o painel administrativo</p>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
       <div class="alert alert-danger" *ngIf="errorMsg()">
         {{ errorMsg() }}
       </div>
 
       <div class="form-group">
         <label class="form-label" for="login">Login</label>
-        <input type="text" id="login" name="login" class="form-control" [(ngModel)]="loginData.login" required autocomplete="username" />
+        <input type="text" id="login" name="login" class="form-control" [(ngModel)]="loginData.login" required autocomplete="username" #loginCtrl="ngModel" [ngClass]="{'is-invalid': loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || loginForm.submitted)}" />
+        <div class="invalid-feedback" *ngIf="loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || loginForm.submitted)">
+          O campo login é obrigatório.
+        </div>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="senha">Senha</label>
-        <input type="password" id="senha" name="senha" class="form-control" [(ngModel)]="loginData.senha" required autocomplete="current-password" />
+        <input type="password" id="senha" name="senha" class="form-control" [(ngModel)]="loginData.senha" required autocomplete="current-password" #senhaCtrl="ngModel" [ngClass]="{'is-invalid': senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || loginForm.submitted)}" />
+        <div class="invalid-feedback" *ngIf="senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || loginForm.submitted)">
+          O campo senha é obrigatório.
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid || isLoading()">
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading()">
         <span *ngIf="!isLoading()">Entrar no Sistema</span>
         <span *ngIf="isLoading()" class="spinner">↻</span>
       </button>

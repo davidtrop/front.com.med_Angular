@@ -1,0 +1,83 @@
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.not-found-card {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+.error-code {
+  font-size: 6rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.countdown-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 1rem;
+  background: rgba(59, 130, 246, 0.05); /* very light blue */
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+}
+
+.countdown-container p {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.spinner {
+  display: inline-block;
+  animation: spin 2s linear infinite;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}

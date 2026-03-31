@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(dados: any): Observable<TokenJWT> {
-    return this.http.post<TokenJWT>('/login', dados).pipe(
+    return this.http.post<TokenJWT>('/api/login', dados).pipe(
       tap((res) => {
         localStorage.setItem('token', res.token);
         this._isAuthenticated.set(true);
