@@ -38,3 +38,11 @@
     Nenhum médico cadastrado.
   </div>
 </div>
+
+<app-confirm-modal
+  [isVisible]="showConfirmModal"
+  title="Excluir Médico"
+  message="Tem certeza que deseja excluir permanentemente este médico?"
+  (confirm)="confirmarExclusao()"
+  (cancel)="cancelarExclusao()">
+</app-confirm-modal>

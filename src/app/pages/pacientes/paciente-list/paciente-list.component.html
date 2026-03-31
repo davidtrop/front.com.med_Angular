@@ -38,3 +38,11 @@
     Nenhum paciente cadastrado.
   </div>
 </div>
+
+<app-confirm-modal
+  [isVisible]="showConfirmModal"
+  title="Excluir Paciente"
+  message="Tem certeza que deseja excluir permanentemente este paciente?"
+  (confirm)="confirmarExclusao()"
+  (cancel)="cancelarExclusao()">
+</app-confirm-modal>
