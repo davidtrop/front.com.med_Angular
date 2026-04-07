@@ -9,7 +9,7 @@
   </div>
 
   <form (ngSubmit)="onSubmit()" #medicoForm="ngForm" *ngIf="!isLoading">
-    
+
     <div class="form-grid">
       <!-- DADOS PRINCIPAIS -->
       <div class="form-group">
@@ -52,7 +52,7 @@
 
     <h3 class="mt-4">Endereço</h3>
     <hr class="mb-4" style="border-color: rgba(255,255,255,0.1)">
-    
+
     <div class="form-grid">
       <div class="form-group" style="grid-column: span 2;">
         <label class="form-label" for="logradouro">Logradouro</label>
@@ -83,12 +83,12 @@
         <label class="form-label" for="uf">UF</label>
         <input type="text" id="uf" name="uf" class="form-control" [(ngModel)]="medico.endereco.uf" required maxlength="2" />
       </div>
-      
+
       <div class="form-group">
         <label class="form-label" for="cep">CEP</label>
         <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="medico.endereco.cep" required pattern="\d{8}" title="Apenas números, 8 dígitos" #cepCtrl="ngModel" [ngClass]="{'is-invalid': cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)}" />
         <div class="invalid-feedback" *ngIf="cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)">
-          CEP deve conter exatamente 8 dígitos numéricos.
+          CEP deve ter 8 números.
         </div>
       </div>
     </div>

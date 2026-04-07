@@ -12,7 +12,7 @@ export class MedicoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<any> {
-    // Retorna a página { content: Medico[], pageable }
+    // Retornando a página
     return this.http.get<any>(this.url);
   }
 

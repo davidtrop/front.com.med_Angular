@@ -39,10 +39,11 @@ export class NotFoundComponent implements OnInit, OnDestroy {
   redirect() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
-      this.intervalId = null; // Prevent double execution
+      // Prevenindo execução dupla
+      this.intervalId = null;
     }
-    
-    // Check if user is logged in
+
+    // Vendo se usuário está logado
     const isLogged = this.authService.isAuthenticated();
     if (isLogged) {
       this.router.navigate(['/dashboard']);

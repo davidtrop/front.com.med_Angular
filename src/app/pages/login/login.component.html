@@ -2,10 +2,9 @@
   <div class="login-card glass-card animate-fade-in">
     <div class="login-header">
       <div class="logo">
-        <span class="icon">⚕️</span>
+        <span class="icon"><img src="favicon.ico" alt="fav"></span>
       </div>
-      <h2>Clinica.Med</h2>
-      <p>Acesse o painel administrativo</p>
+      <h2>Consultório Asadom</h2>
     </div>
 
     <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
@@ -30,7 +29,7 @@
       </div>
 
       <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading()">
-        <span *ngIf="!isLoading()">Entrar no Sistema</span>
+        <span *ngIf="!isLoading()">Entrar</span>
         <span *ngIf="isLoading()" class="spinner">↻</span>
       </button>
 
