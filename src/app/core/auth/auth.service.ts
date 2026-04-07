@@ -22,6 +22,10 @@ export class AuthService {
     );
   }
 
+  register(dados: any): Observable<any> {
+    return this.http.post('/api/usuarios', dados);
+  }
+
   logout() {
     localStorage.removeItem('token');
     this._isAuthenticated.set(false);

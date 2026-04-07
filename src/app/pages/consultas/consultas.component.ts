@@ -31,6 +31,27 @@ export class ConsultasComponent implements OnInit {
 
   isLoadingA = false;
   isLoadingC = false;
+  consultas: any[] = [];
+
+  // Variáveis do Modal
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+
+  get minDate(): string {
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, 16);
+  }
+
+  openModal(title: string, message: string) {
+    this.modalTitle = title;
+    this.modalMessage = message;
+    this.modalVisible = true;
+  }
+
+  closeModal() {
+    this.modalVisible = false;
+  }
 
   constructor(
     private consultaService: ConsultaService,
@@ -41,29 +62,50 @@ export class ConsultasComponent implements OnInit {
   ngOnInit() {
     this.medicoService.listar().subscribe((res: any) => this.medicos = res.content || res);
     this.pacienteService.listar().subscribe((res: any) => this.pacientes = res.content || res);
+    this.carregarConsultas();
+  }
+
+  carregarConsultas() {
+    this.consultaService.listar().subscribe({
+      next: (res: any) => {
+        this.consultas = res.content || res;
+      },
+      error: (err: any) => {
+        console.error('Erro ao carregar consultas', err);
+      }
+    });
   }
 
   agendar() {
     this.isLoadingA = true;
     
-    // Convert current local datetime input to ISO format for Spring Boot
-    const dateObj = new Date(this.agendamento.data);
-    const isoDate = dateObj.toISOString().split('.')[0]; // remove ms to avoid spring parsing issues depending on format
+    let formattedData = '';
+    if (this.agendamento.data) {
+      const dateObj = new Date(this.agendamento.data);
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const year = dateObj.getFullYear();
+      const hours = String(dateObj.getHours()).padStart(2, '0');
+      const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+      formattedData = `${day}/${month}/${year} ${hours}:${minutes}`;
+    }
 
     const consulta = {
       idMedico: this.agendamento.idMedico || undefined,
       idPaciente: this.agendamento.idPaciente || undefined,
-      data: this.agendamento.data // Backend might expect specific format, usually "yyyy-MM-ddTHH:mm" for LocalDateTime
+      data: formattedData
     };
     
     this.consultaService.agendar(consulta).subscribe({
       next: (res: any) => {
-        alert('Consulta agendada com sucesso! ID: ' + res.id);
+        this.openModal('Sucesso', 'Consulta agendada com sucesso! ID: ' + res.id);
         this.isLoadingA = false;
         this.agendamento = { idMedico: null, idPaciente: null, data: '' };
+        this.carregarConsultas();
       },
       error: (err: any) => {
-        alert('Erro ao agendar consulta: ' + (err.error?.message || err.message));
+        const errorMsg = err.error?.message || err.message || 'Erro desconhecido.';
+        this.openModal('Erro', 'Erro ao agendar consulta: ' + errorMsg);
         this.isLoadingA = false;
       }
     });
@@ -74,12 +116,14 @@ export class ConsultasComponent implements OnInit {
     this.isLoadingC = true;
     this.consultaService.cancelar(this.cancelamento.idConsulta, this.cancelamento.motivoCancelamento).subscribe({
       next: () => {
-        alert('Consulta cancelada com sucesso!');
+        this.openModal('Sucesso', 'Consulta cancelada com sucesso!');
         this.isLoadingC = false;
         this.cancelamento = { idConsulta: null, motivoCancelamento: '' };
+        this.carregarConsultas();
       },
       error: (err: any) => {
-        alert('Erro ao cancelar consulta.');
+        const errorMsg = err.error?.message || err.message || 'Erro desconhecido.';
+        this.openModal('Erro', 'Erro ao cancelar consulta: ' + errorMsg);
         this.isLoadingC = false;
       }
     });

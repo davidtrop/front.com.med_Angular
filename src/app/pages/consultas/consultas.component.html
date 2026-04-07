@@ -27,7 +27,10 @@
 
       <div class="form-group">
         <label class="form-label" for="data">Data e Hora</label>
-        <input type="datetime-local" id="data" name="data" class="form-control" [(ngModel)]="agendamento.data" required />
+        <input type="datetime-local" id="data" name="data" class="form-control" [(ngModel)]="agendamento.data" required [min]="minDate" #dataCtrl="ngModel" [ngClass]="{'is-invalid': dataCtrl.invalid && (dataCtrl.dirty || dataCtrl.touched)}" />
+        <div class="invalid-feedback" *ngIf="dataCtrl.invalid && (dataCtrl.dirty || dataCtrl.touched)">
+          A data da consulta deve ser no futuro.
+        </div>
       </div>
 
       <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!agendarForm.form.valid || isLoadingA">
@@ -64,4 +67,52 @@
     </form>
   </div>
 
+</div>
+
+<!-- LISTAGEM -->
+<div class="glass-card mt-4 p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="m-0">Últimas Consultas</h3>
+    <button class="btn btn-outline-primary btn-sm" (click)="carregarConsultas()">Atualizar Lista</button>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Médico</th>
+          <th>Data/Hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consulta of consultas">
+          <td>#{{ consulta.id }}</td>
+          <td>{{ consulta.nomePaciente }}</td>
+          <td>{{ consulta.nomeMedico || 'Não Atribuído' }}</td>
+          <td>{{ consulta.dataConsulta | date:'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+        <tr *ngIf="consultas.length === 0">
+          <td colspan="4" class="text-center text-muted">Nenhuma consulta agendada encontrada.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL DE FEEDBACK -->
+<div class="custom-modal-backdrop" *ngIf="modalVisible">
+  <div class="custom-modal animate-fade-in">
+    <div class="modal-header">
+      <h4 class="m-0" [ngClass]="{'text-danger': modalTitle === 'Erro', 'text-success': modalTitle === 'Sucesso'}">{{ modalTitle }}</h4>
+      <button type="button" class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>{{ modalMessage }}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="closeModal()">OK</button>
+    </div>
+  </div>
 </div>

@@ -23,4 +23,8 @@ export class ConsultaService {
       }
     });
   }
+
+  listar(page: number = 0, size: number = 10): Observable<any> {
+    return this.http.get<any>(`${this.url}?page=${page}&size=${size}&sort=data,desc`);
+  }
 }

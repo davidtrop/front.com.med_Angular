@@ -24,12 +24,18 @@
 
       <div class="form-group">
         <label class="form-label" for="telefone">Telefone</label>
-        <input type="tel" id="telefone" name="telefone" class="form-control" [(ngModel)]="medico.telefone" required />
+        <input type="tel" id="telefone" name="telefone" class="form-control" [(ngModel)]="medico.telefone" required pattern="^(\([0-9]{2}\)\s?)?([0-9]{4,5}-[0-9]{4})$" title="Formato (XX) 99999-9999 ou 9999-9999" #telefoneCtrl="ngModel" [ngClass]="{'is-invalid': telefoneCtrl.invalid && (telefoneCtrl.dirty || telefoneCtrl.touched)}" />
+        <div class="invalid-feedback" *ngIf="telefoneCtrl.invalid && (telefoneCtrl.dirty || telefoneCtrl.touched)">
+          Telefone inválido. Formato: (XX) 99999-9999
+        </div>
       </div>
 
       <div class="form-group" *ngIf="!isEdicao">
         <label class="form-label" for="crm">CRM</label>
-        <input type="text" id="crm" name="crm" class="form-control" [(ngModel)]="medico.crm" required />
+        <input type="text" id="crm" name="crm" class="form-control" [(ngModel)]="medico.crm" required pattern="\d{4,6}" title="CRM deve ter de 4 a 6 dígitos" #crmCtrl="ngModel" [ngClass]="{'is-invalid': crmCtrl.invalid && (crmCtrl.dirty || crmCtrl.touched)}" />
+        <div class="invalid-feedback" *ngIf="crmCtrl.invalid && (crmCtrl.dirty || crmCtrl.touched)">
+          CRM deve conter entre 4 e 6 dígitos numéricos.
+        </div>
       </div>
 
       <div class="form-group" *ngIf="!isEdicao">
@@ -80,7 +86,10 @@
       
       <div class="form-group">
         <label class="form-label" for="cep">CEP</label>
-        <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="medico.endereco.cep" required />
+        <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="medico.endereco.cep" required pattern="\d{8}" title="Apenas números, 8 dígitos" #cepCtrl="ngModel" [ngClass]="{'is-invalid': cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)}" />
+        <div class="invalid-feedback" *ngIf="cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)">
+          CEP deve conter exatamente 8 dígitos numéricos.
+        </div>
       </div>
     </div>
 

@@ -28,7 +28,10 @@
 
       <div class="form-group" *ngIf="!isEdicao">
         <label class="form-label" for="cpf">CPF</label>
-        <input type="text" id="cpf" name="cpf" class="form-control" [(ngModel)]="paciente.cpf" required />
+        <input type="text" id="cpf" name="cpf" class="form-control" [(ngModel)]="paciente.cpf" required pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" title="Formato exigido: 123.456.789-10 ou apenas números" #cpfCtrl="ngModel" [ngClass]="{'is-invalid': cpfCtrl.invalid && (cpfCtrl.dirty || cpfCtrl.touched)}" />
+        <div class="invalid-feedback" *ngIf="cpfCtrl.invalid && (cpfCtrl.dirty || cpfCtrl.touched)">
+          CPF no formato incorreto.
+        </div>
       </div>
     </div>
 
@@ -68,7 +71,10 @@
       
       <div class="form-group">
         <label class="form-label" for="cep">CEP</label>
-        <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="paciente.endereco.cep" required />
+        <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="paciente.endereco.cep" required pattern="\d{8}" title="Apenas números, 8 dígitos" #cepCtrl="ngModel" [ngClass]="{'is-invalid': cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)}" />
+        <div class="invalid-feedback" *ngIf="cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)">
+           CEP deve conter exatamente 8 dígitos numéricos.
+        </div>
       </div>
     </div>
 

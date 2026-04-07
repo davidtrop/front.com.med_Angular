@@ -5,35 +5,42 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent {
-  loginData = { login: '', senha: '' };
-  errorMsg = signal<string | null>(null);
+export class RegisterComponent {
+  registerData = {
+    login: '',
+    senha: ''
+  };
+
   isLoading = signal<boolean>(false);
+  errorMsg = signal<string>('');
+  successMsg = signal<string>('');
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
-    
+    if (form.invalid) return;
+
     this.isLoading.set(true);
-    this.errorMsg.set(null);
-    this.authService.login(this.loginData).subscribe({
+    this.errorMsg.set('');
+    this.successMsg.set('');
+
+    this.authService.register(this.registerData).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/dashboard']);
+        this.successMsg.set('Usuário registrado com sucesso!');
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1500);
       },
       error: (err) => {
         this.isLoading.set(false);
-        this.errorMsg.set('Credenciais inválidas ou erro no servidor.');
-        console.error(err);
+        this.errorMsg.set(err.error?.message || 'Erro ao registrar usuário. Tente novamente.');
       }
     });
   }

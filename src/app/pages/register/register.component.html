@@ -1,0 +1,45 @@
+<div class="login-container">
+  <div class="login-card glass-card animate-fade-in">
+    <div class="login-header">
+      <div class="logo">
+        <span class="icon">⚕️</span>
+      </div>
+      <h2>Novo Usuário</h2>
+      <p>Crie sua conta administrativa</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+      <div class="alert alert-danger" *ngIf="errorMsg()">
+        {{ errorMsg() }}
+      </div>
+      <div class="alert alert-success" *ngIf="successMsg()">
+        {{ successMsg() }}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="login">Login</label>
+        <input type="text" id="login" name="login" class="form-control" [(ngModel)]="registerData.login" required autocomplete="username" #loginCtrl="ngModel" [ngClass]="{'is-invalid': loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || registerForm.submitted)}" />
+        <div class="invalid-feedback" *ngIf="loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || registerForm.submitted)">
+          O campo login é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" class="form-control" [(ngModel)]="registerData.senha" required autocomplete="new-password" #senhaCtrl="ngModel" [ngClass]="{'is-invalid': senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || registerForm.submitted)}" />
+        <div class="invalid-feedback" *ngIf="senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || registerForm.submitted)">
+          O campo senha é obrigatório.
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading() || registerForm.invalid">
+        <span *ngIf="!isLoading()">Registrar</span>
+        <span *ngIf="isLoading()" class="spinner">↻</span>
+      </button>
+
+      <div class="register-link mt-4 text-center">
+        <a routerLink="/login" class="text-primary text-decoration-none">Já tem uma conta? Fazer Login</a>
+      </div>
+    </form>
+  </div>
+</div>
