@@ -1,16 +1,17 @@
-<aside class="sidebar glass-card">
+<aside class="sidebar glass-card" [class.open]="isOpen">
   <div class="sidebar-brand">
     <div class="logo-small"><span class="icon"><img src="favicon.ico" alt="fav"></span></div>
     <h3>Asadom</h3>
+    <button class="btn-close-sidebar show-mobile" (click)="onLinkClick()">&times;</button>
   </div>
   <nav class="sidebar-nav">
-    <a routerLink="/dashboard/medicos" routerLinkActive="active" class="nav-item">
+    <a routerLink="/dashboard/medicos" routerLinkActive="active" class="nav-item" (click)="onLinkClick()">
       <span>👩‍⚕️ Médicos</span>
     </a>
-    <a routerLink="/dashboard/pacientes" routerLinkActive="active" class="nav-item">
+    <a routerLink="/dashboard/pacientes" routerLinkActive="active" class="nav-item" (click)="onLinkClick()">
       <span>🛌 Pacientes</span>
     </a>
-    <a routerLink="/dashboard/consultas" routerLinkActive="active" class="nav-item">
+    <a routerLink="/dashboard/consultas" routerLinkActive="active" class="nav-item" (click)="onLinkClick()">
       <span>📅 Consultas</span>
     </a>
   </nav>
@@ -18,3 +19,4 @@
     <button class="btn btn-danger btn-block" (click)="onLogout()"> Sair </button>
   </div>
 </aside>
+

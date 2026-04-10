@@ -1,44 +1,72 @@
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
+  position: relative;
 }
 
 .dashboard-content {
   flex-grow: 1;
-  padding: 1rem 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   overflow-y: auto;
-  max-width: calc(100vw - 280px); /* 260px sidebar + margin */
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .dashboard-content {
+    padding: 1rem 2rem;
+    max-width: calc(100vw - 280px); /* 260px sidebar + margin */
+  }
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+@media (min-width: 768px) {
+  .dashboard-header {
+    padding: 1rem 2rem;
+  }
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--accent), var(--primary));
-  color: white;
+.btn-hamburger {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-weight: bold;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.btn-hamburger span {
+  width: 2rem;
+  height: 0.25rem;
+  background: var(--text-main);
+  border-radius: 10px;
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
 }
 
 .dashboard-body {
   flex-grow: 1;
   animation: fadeIn 0.4s ease-out;
 }
+

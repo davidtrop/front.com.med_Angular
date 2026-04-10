@@ -11,5 +11,13 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+  sidebarOpen = false;
 
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  closeSidebar() {
+    this.sidebarOpen = false;
+  }
 }

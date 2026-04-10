@@ -1,9 +1,20 @@
 <div class="dashboard-layout">
-  <app-sidebar></app-sidebar>
+  <app-sidebar [isOpen]="sidebarOpen" (closeSidebar)="closeSidebar()"></app-sidebar>
+  
+  <!-- Backdrop for mobile -->
+  <div class="sidebar-backdrop show-mobile" *ngIf="sidebarOpen" (click)="closeSidebar()"></div>
+
   <main class="dashboard-content">
     <div class="dashboard-header glass-card">
-      <h2 style="margin:0">Painel de Controle</h2>
-      <div class="user-profile">
+      <div class="header-left flex items-center gap-4">
+        <button class="btn-hamburger show-mobile" (click)="toggleSidebar()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <h2 style="margin:0">Painel de Controle</h2>
+      </div>
+      <div class="user-profile hide-mobile">
         <span>Administrador do Sistema</span>
         <div class="avatar">A</div>
       </div>

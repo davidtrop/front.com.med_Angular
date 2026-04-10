@@ -63,10 +63,18 @@ a:hover {
 }
 
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
 }
+
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;
+  }
+}
+
 
 .glass-card {
   background: var(--glass-bg);
@@ -76,8 +84,15 @@ a:hover {
   border: var(--glass-border);
   box-shadow: var(--glass-shadow);
   border-radius: var(--radius-lg);
-  padding: 2rem;
+  padding: 1.5rem;
 }
+
+@media (min-width: 768px) {
+  .glass-card {
+    padding: 2rem;
+  }
+}
+
 
 .form-group {
   margin-bottom: 1.5rem;
@@ -172,11 +187,14 @@ a:hover {
 }
 
 .table-container {
+  width: 100%;
   overflow-x: auto;
   border-radius: var(--radius-md);
   background: var(--bg-card);
   border: var(--glass-border);
+  -webkit-overflow-scrolling: touch;
 }
+
 
 .table {
   width: 100%;
@@ -246,3 +264,29 @@ a:hover {
 .gap-4 {
   gap: 1rem;
 }
+
+/* Responsividade utilitária */
+.hide-mobile {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: initial !important;
+  }
+  
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .flex-md-row {
+    flex-direction: row;
+  }
+}
+
