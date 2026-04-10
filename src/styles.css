@@ -265,6 +265,13 @@ a:hover {
   gap: 1rem;
 }
 
+/* Utilitários de Grid Responsivos */
+@media (min-width: 768px) {
+  .md\:col-span-2 {
+    grid-column: span 2;
+  }
+}
+
 /* Responsividade utilitária */
 .hide-mobile {
   display: none !important;
@@ -287,6 +294,26 @@ a:hover {
 @media (min-width: 768px) {
   .flex-md-row {
     flex-direction: row;
+  }
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.w-full {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .mobile-stack {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+  
+  .mobile-w-full {
+    width: 100% !important;
   }
 }
 

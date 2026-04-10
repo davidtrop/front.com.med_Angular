@@ -1,6 +1,6 @@
-<div class="page-header flex justify-between items-center mb-4">
+<div class="page-header flex mobile-stack justify-between items-center mb-4">
   <h2>{{ isEdicao ? 'Editar Paciente' : 'Novo Paciente' }}</h2>
-  <a routerLink="/dashboard/pacientes" class="btn btn-danger">Voltar</a>
+  <a routerLink="/dashboard/pacientes" class="btn btn-danger mobile-w-full">Voltar</a>
 </div>
 
 <div class="glass-card">
@@ -39,7 +39,7 @@
     <hr class="mb-4" style="border-color: rgba(255,255,255,0.1)">
 
     <div class="form-grid">
-      <div class="form-group" style="grid-column: span 2;">
+      <div class="form-group md:col-span-2">
         <label class="form-label" for="logradouro">Logradouro</label>
         <input type="text" id="logradouro" name="logradouro" class="form-control" [(ngModel)]="paciente.endereco.logradouro" required />
       </div>
@@ -78,9 +78,9 @@
       </div>
     </div>
 
-    <div class="mt-4 flex justify-between">
-      <button type="button" class="btn btn-danger" routerLink="/dashboard/pacientes">Cancelar</button>
-      <button type="submit" class="btn btn-success" [disabled]="!pacienteForm.form.valid">Salvar Paciente</button>
+    <div class="mt-4 flex mobile-stack justify-between">
+      <button type="button" class="btn btn-danger mobile-w-full" routerLink="/dashboard/pacientes">Cancelar</button>
+      <button type="submit" class="btn btn-success mobile-w-full" [disabled]="!pacienteForm.form.valid">Salvar Paciente</button>
     </div>
 
   </form>

@@ -11,6 +11,21 @@
   }
 }
 
+@media (max-width: 767px) {
+  .consulta-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .table {
+    font-size: 0.85rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
 
 select.form-control {
   appearance: none;
