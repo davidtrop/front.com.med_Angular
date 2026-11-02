@@ -3,9 +3,11 @@
     <div class="modal-dialog glass-card animate-fade-in">
       <div class="modal-header">
         <h3 style="margin: 0; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="color: var(--danger)">⚠️</span> {{ title }}
+          <mat-icon style="color: var(--danger)">warning</mat-icon> {{ title }}
         </h3>
-        <button class="close-btn" (click)="onCancel()" aria-label="Close modal">&times;</button>
+        <button mat-icon-button (click)="onCancel()" aria-label="Close modal">
+          <mat-icon>close</mat-icon>
+        </button>
       </div>
       
       <div class="modal-body">
@@ -13,10 +15,11 @@
       </div>
       
       <div class="modal-footer">
-        <button class="btn btn-outline" (click)="onCancel()">
+        <button mat-stroked-button (click)="onCancel()">
           Cancelar
         </button>
-        <button class="btn btn-danger" (click)="onConfirm()">
+        <button mat-flat-button color="warn" (click)="onConfirm()">
+          <mat-icon>delete</mat-icon>
           Confirmar
         </button>
       </div>

@@ -317,3 +317,46 @@ a:hover {
   }
 }
 
+
+html, body { height: 100%; }
+
+/* Material Icons inline size adjustment */
+.material-icons {
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+
+/* Angular Material overrides for dark theme compatibility */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+mat-form-field [matPrefix] {
+  margin-right: 0.5rem;
+  color: var(--text-muted);
+}
+
+.md\:col-span-2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .md\:col-span-2 {
+    grid-column: span 1;
+  }
+}
+
+mat-card.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.mat-mdc-snack-bar-container {
+  margin-top: 1rem;
+}
+

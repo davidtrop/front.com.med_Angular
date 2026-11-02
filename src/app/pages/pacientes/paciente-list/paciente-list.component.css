@@ -2,19 +2,32 @@
   margin-bottom: 2rem;
 }
 
-.btn-icon {
-  background: transparent;
-  border: none;
+.btn mat-icon {
   font-size: 1.2rem;
-  cursor: pointer;
-  transition: var(--transition);
-  opacity: 0.8;
+  width: 1.2rem;
+  height: 1.2rem;
+  vertical-align: middle;
 }
 
-.btn-icon:hover {
-  opacity: 1;
-  transform: scale(1.1);
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
 }
 
-.text-primary { color: var(--primary); }
-.text-danger { color: var(--danger); }
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+}

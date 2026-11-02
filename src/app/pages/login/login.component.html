@@ -1,41 +1,68 @@
 <div class="login-container">
-  <div class="login-card glass-card animate-fade-in">
-    <div class="login-header">
-      <div class="logo">
-        <span class="icon"><img src="favicon.ico" alt="fav"></span>
-      </div>
-      <h2>Consultório Asadom</h2>
-    </div>
-
-    <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
-      <div class="alert alert-danger" *ngIf="errorMsg()">
-        {{ errorMsg() }}
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="login">Login</label>
-        <input type="text" id="login" name="login" class="form-control" [(ngModel)]="loginData.login" required autocomplete="username" #loginCtrl="ngModel" [ngClass]="{'is-invalid': loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || loginForm.submitted)}" />
-        <div class="invalid-feedback" *ngIf="loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || loginForm.submitted)">
-          O campo login é obrigatório.
+  <mat-card class="login-card glass-card animate-fade-in">
+    <mat-card-content>
+      <div class="login-header">
+        <div class="logo">
+          <span class="icon"><img src="favicon.ico" alt="fav"></span>
         </div>
+        <h2>Consultório Asadom</h2>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="senha">Senha</label>
-        <input type="password" id="senha" name="senha" class="form-control" [(ngModel)]="loginData.senha" required autocomplete="current-password" #senhaCtrl="ngModel" [ngClass]="{'is-invalid': senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || loginForm.submitted)}" />
-        <div class="invalid-feedback" *ngIf="senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || loginForm.submitted)">
-          O campo senha é obrigatório.
+      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+        <div class="alert alert-danger mb-4" *ngIf="errorMsg()">
+          <mat-icon class="alert-icon">error</mat-icon>
+          <span>{{ errorMsg() }}</span>
         </div>
-      </div>
 
-      <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading()">
-        <span *ngIf="!isLoading()">Entrar</span>
-        <span *ngIf="isLoading()" class="spinner">↻</span>
-      </button>
+        <mat-form-field appearance="outline" class="w-full mb-2">
+          <mat-label>Login</mat-label>
+          <input
+            matInput
+            type="text"
+            id="login"
+            name="login"
+            [(ngModel)]="loginData.login"
+            required
+            autocomplete="username"
+            #loginCtrl="ngModel"
+          />
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="loginCtrl.invalid && (loginCtrl.dirty || loginCtrl.touched || loginForm.submitted)">
+            O campo login é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-      <div class="mt-4 text-center">
-        <a routerLink="/register" class="text-primary text-decoration-none" style="font-size: 0.9rem; font-weight: 500;">Não tem uma conta? Registre-se</a>
-      </div>
-    </form>
-  </div>
+        <mat-form-field appearance="outline" class="w-full mb-3">
+          <mat-label>Senha</mat-label>
+          <input
+            matInput
+            type="password"
+            id="senha"
+            name="senha"
+            [(ngModel)]="loginData.senha"
+            required
+            autocomplete="current-password"
+            #senhaCtrl="ngModel"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-error *ngIf="senhaCtrl.invalid && (senhaCtrl.dirty || senhaCtrl.touched || loginForm.submitted)">
+            O campo senha é obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="w-full py-2" [disabled]="isLoading()">
+          <span *ngIf="!isLoading()" class="flex items-center justify-center gap-2">
+            <mat-icon>login</mat-icon> Entrar
+          </span>
+          <mat-spinner *ngIf="isLoading()" diameter="24" color="accent"></mat-spinner>
+        </button>
+
+        <div class="mt-4 text-center">
+          <a routerLink="/register" class="text-primary text-decoration-none" style="font-size: 0.9rem; font-weight: 500;">
+            Não tem uma conta? Registre-se
+          </a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

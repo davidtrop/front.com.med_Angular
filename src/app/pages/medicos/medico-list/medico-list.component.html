@@ -1,43 +1,51 @@
 <div class="page-header flex flex-col flex-md-row justify-between items-center gap-4 mb-4">
   <h2>Médicos</h2>
-  <a routerLink="/dashboard/medicos/novo" class="btn btn-primary">
-    + Novo Médico
+  <a mat-flat-button color="primary" routerLink="/dashboard/medicos/novo">
+    <mat-icon>add</mat-icon> Novo Médico
   </a>
 </div>
 
-<div class="glass-card table-container">
-  <div *ngIf="isLoading" class="text-center">
-    <span class="spinner">↻</span> Carregando...
-  </div>
-  
-  <table class="table" *ngIf="!isLoading && medicos.length > 0">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>CRM</th>
-        <th>Especialidade</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let medico of medicos">
-        <td>{{ medico.nome }}</td>
-        <td>{{ medico.email }}</td>
-        <td>{{ medico.crm }}</td>
-        <td style="text-transform: capitalize;">{{ medico.especialidade }}</td>
-        <td class="flex gap-4">
-          <button class="btn-icon text-primary" (click)="editarMedico(medico.id)" title="Editar">✏️</button>
-          <button class="btn-icon text-danger" (click)="excluirMedico(medico.id)" title="Excluir">🗑️</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<mat-card class="glass-card table-container">
+  <mat-card-content>
+    <div *ngIf="isLoading" class="text-center spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span>Carregando...</span>
+    </div>
+    
+    <table class="table" *ngIf="!isLoading && medicos.length > 0">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>CRM</th>
+          <th>Especialidade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medico of medicos">
+          <td>{{ medico.nome }}</td>
+          <td>{{ medico.email }}</td>
+          <td>{{ medico.crm }}</td>
+          <td style="text-transform: capitalize;">{{ medico.especialidade }}</td>
+          <td class="flex gap-2">
+            <button mat-icon-button color="primary" (click)="editarMedico(medico.id)" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="excluirMedico(medico.id)" matTooltip="Excluir">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-  <div *ngIf="!isLoading && medicos.length === 0" class="text-center text-muted">
-    Nenhum médico cadastrado.
-  </div>
-</div>
+    <div *ngIf="!isLoading && medicos.length === 0" class="text-center text-muted empty-state">
+      <mat-icon class="empty-icon">person_off</mat-icon>
+      <p>Nenhum médico cadastrado.</p>
+    </div>
+  </mat-card-content>
+</mat-card>
 
 <app-confirm-modal
   [isVisible]="showConfirmModal"

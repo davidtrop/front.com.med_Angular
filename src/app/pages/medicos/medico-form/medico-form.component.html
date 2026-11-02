@@ -1,104 +1,136 @@
 <div class="page-header flex mobile-stack justify-between items-center mb-4">
   <h2>{{ isEdicao ? 'Editar Médico' : 'Novo Médico' }}</h2>
-  <a routerLink="/dashboard/medicos" class="btn btn-danger mobile-w-full">Voltar</a>
+  <a mat-stroked-button color="warn" routerLink="/dashboard/medicos" class="mobile-w-full">
+    <mat-icon>arrow_back</mat-icon> Voltar
+  </a>
 </div>
 
-<div class="glass-card">
-  <div *ngIf="isLoading" class="text-center mb-4">
-    <span class="spinner">↻</span> Carregando...
-  </div>
-
-  <form (ngSubmit)="onSubmit()" #medicoForm="ngForm" *ngIf="!isLoading">
-
-    <div class="form-grid">
-      <!-- DADOS PRINCIPAIS -->
-      <div class="form-group">
-        <label class="form-label" for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="medico.nome" required />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="email">E-mail</label>
-        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="medico.email" required email />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="telefone">Telefone</label>
-        <input type="tel" id="telefone" name="telefone" class="form-control" [(ngModel)]="medico.telefone" required pattern="^(\([0-9]{2}\)\s?)?([0-9]{4,5}-[0-9]{4})$" title="Formato (XX) 99999-9999 ou 9999-9999" #telefoneCtrl="ngModel" [ngClass]="{'is-invalid': telefoneCtrl.invalid && (telefoneCtrl.dirty || telefoneCtrl.touched)}" />
-        <div class="invalid-feedback" *ngIf="telefoneCtrl.invalid && (telefoneCtrl.dirty || telefoneCtrl.touched)">
-          Telefone inválido. Formato: (XX) 99999-9999
-        </div>
-      </div>
-
-      <div class="form-group" *ngIf="!isEdicao">
-        <label class="form-label" for="crm">CRM</label>
-        <input type="text" id="crm" name="crm" class="form-control" [(ngModel)]="medico.crm" required pattern="\d{4,6}" title="CRM deve ter de 4 a 6 dígitos" #crmCtrl="ngModel" [ngClass]="{'is-invalid': crmCtrl.invalid && (crmCtrl.dirty || crmCtrl.touched)}" />
-        <div class="invalid-feedback" *ngIf="crmCtrl.invalid && (crmCtrl.dirty || crmCtrl.touched)">
-          CRM deve conter entre 4 e 6 dígitos numéricos.
-        </div>
-      </div>
-
-      <div class="form-group" *ngIf="!isEdicao">
-        <label class="form-label" for="especialidade">Especialidade</label>
-        <select id="especialidade" name="especialidade" class="form-control" [(ngModel)]="medico.especialidade" required>
-          <option value="">Selecione...</option>
-          <option value="ORTOPEDIA">Ortopedia</option>
-          <option value="CARDIOLOGIA">Cardiologia</option>
-          <option value="GINECOLOGIA">Ginecologia</option>
-          <option value="DERMATOLOGIA">Dermatologia</option>
-        </select>
-      </div>
+<mat-card class="glass-card">
+  <mat-card-content>
+    <div *ngIf="isLoading" class="text-center mb-4 spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span>Carregando...</span>
     </div>
 
-    <h3 class="mt-4">Endereço</h3>
-    <hr class="mb-4" style="border-color: rgba(255,255,255,0.1)">
+    <form (ngSubmit)="onSubmit()" #medicoForm="ngForm" *ngIf="!isLoading">
 
-    <div class="form-grid">
-      <div class="form-group md:col-span-2">
-        <label class="form-label" for="logradouro">Logradouro</label>
-        <input type="text" id="logradouro" name="logradouro" class="form-control" [(ngModel)]="medico.endereco.logradouro" required />
+      <div class="form-grid">
+        <!-- DADOS PRINCIPAIS -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput type="text" id="nome" name="nome" [(ngModel)]="medico.nome" required #nomeCtrl="ngModel" />
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="nomeCtrl.invalid">O nome é obrigatório.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" id="email" name="email" [(ngModel)]="medico.email" required email
+            #emailCtrl="ngModel" />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="emailCtrl.invalid">Informe um e-mail válido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Telefone</mat-label>
+          <input matInput type="tel" id="telefone" name="telefone" [(ngModel)]="medico.telefone" appPhoneMask
+            placeholder="(##) #####-####" required pattern="^(\([0-9]{2}\)\s?)?([0-9]{4,5}-[0-9]{4})$"
+            #telefoneCtrl="ngModel" />
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-error *ngIf="telefoneCtrl.hasError('required')">O telefone é obrigatório.</mat-error>
+          <mat-error *ngIf="telefoneCtrl.hasError('pattern')">Telefone inválido. Formato: (XX) 99999-9999</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full" *ngIf="!isEdicao">
+          <mat-label>CRM</mat-label>
+          <input matInput type="text" id="crm" name="crm" [(ngModel)]="medico.crm" required pattern="\d{4,6}"
+            #crmCtrl="ngModel" />
+          <mat-icon matPrefix>badge</mat-icon>
+          <mat-error *ngIf="crmCtrl.hasError('required')">O CRM é obrigatório.</mat-error>
+          <mat-error *ngIf="crmCtrl.hasError('pattern')">CRM deve conter entre 4 e 6 dígitos numéricos.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full" *ngIf="!isEdicao">
+          <mat-label>Especialidade</mat-label>
+          <mat-select id="especialidade" name="especialidade" [(ngModel)]="medico.especialidade" required
+            #espCtrl="ngModel">
+            <mat-option value="ORTOPEDIA">Ortopedia</mat-option>
+            <mat-option value="CARDIOLOGIA">Cardiologia</mat-option>
+            <mat-option value="GINECOLOGIA">Ginecologia</mat-option>
+            <mat-option value="DERMATOLOGIA">Dermatologia</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>medical_services</mat-icon>
+          <mat-error *ngIf="espCtrl.invalid">Selecione uma especialidade.</mat-error>
+        </mat-form-field>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="numero">Número</label>
-        <input type="text" id="numero" name="numero" class="form-control" [(ngModel)]="medico.endereco.numero" />
+      <div class="section-title mt-4 mb-2 flex items-center gap-2">
+        <h3 class="m-0">Endereço</h3>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="complemento">Complemento</label>
-        <input type="text" id="complemento" name="complemento" class="form-control" [(ngModel)]="medico.endereco.complemento" />
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="w-full md:col-span-2">
+          <mat-label>Logradouro</mat-label>
+          <input matInput type="text" id="logradouro" name="logradouro" [(ngModel)]="medico.endereco.logradouro"
+            required #logCtrl="ngModel" />
+          <mat-icon matPrefix>home</mat-icon>
+          <mat-error *ngIf="logCtrl.invalid">Logradouro é obrigatório.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Número</mat-label>
+          <input matInput type="text" id="numero" name="numero" [(ngModel)]="medico.endereco.numero" />
+          <mat-icon matPrefix>pin</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Complemento</mat-label>
+          <input matInput type="text" id="complemento" name="complemento" [(ngModel)]="medico.endereco.complemento" />
+          <mat-icon matPrefix>apartment</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Bairro</mat-label>
+          <input matInput type="text" id="bairro" name="bairro" [(ngModel)]="medico.endereco.bairro" required
+            #bairroCtrl="ngModel" />
+          <mat-icon matPrefix>holiday_village</mat-icon>
+          <mat-error *ngIf="bairroCtrl.invalid">Bairro é obrigatório.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Cidade</mat-label>
+          <input matInput type="text" id="cidade" name="cidade" [(ngModel)]="medico.endereco.cidade" required
+            #cidadeCtrl="ngModel" />
+          <mat-icon matPrefix>location_city</mat-icon>
+          <mat-error *ngIf="cidadeCtrl.invalid">Cidade é obrigatória.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>UF</mat-label>
+          <input matInput type="text" id="uf" name="uf" [(ngModel)]="medico.endereco.uf" required maxlength="2"
+            #ufCtrl="ngModel" />
+          <mat-icon matPrefix>map</mat-icon>
+          <mat-error *ngIf="ufCtrl.invalid">UF é obrigatória (ex: SP).</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>CEP</mat-label>
+          <input matInput type="text" id="cep" name="cep" [(ngModel)]="medico.endereco.cep" required pattern="\d{8}"
+            maxlength="8" placeholder="Apenas números (8 dígitos)" #cepCtrl="ngModel" />
+          <mat-icon matPrefix>local_post_office</mat-icon>
+          <mat-error *ngIf="cepCtrl.invalid">CEP deve ter 8 números.</mat-error>
+        </mat-form-field>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="bairro">Bairro</label>
-        <input type="text" id="bairro" name="bairro" class="form-control" [(ngModel)]="medico.endereco.bairro" required />
+      <div class="mt-4 flex mobile-stack justify-between gap-3">
+        <button mat-stroked-button color="warn" type="button" routerLink="/dashboard/medicos" class="mobile-w-full">
+          <mat-icon>cancel</mat-icon> Cancelar
+        </button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="!medicoForm.form.valid" class="mobile-w-full">
+          <mat-icon>save</mat-icon> {{ isEdicao ? 'Atualizar Médico' : 'Salvar Médico' }}
+        </button>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" class="form-control" [(ngModel)]="medico.endereco.cidade" required />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="uf">UF</label>
-        <input type="text" id="uf" name="uf" class="form-control" [(ngModel)]="medico.endereco.uf" required maxlength="2" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="cep">CEP</label>
-        <input type="text" id="cep" name="cep" class="form-control" [(ngModel)]="medico.endereco.cep" required pattern="\d{8}" title="Apenas números, 8 dígitos" #cepCtrl="ngModel" [ngClass]="{'is-invalid': cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)}" />
-        <div class="invalid-feedback" *ngIf="cepCtrl.invalid && (cepCtrl.dirty || cepCtrl.touched)">
-          CEP deve ter 8 números.
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-4 flex mobile-stack justify-between">
-      <button type="button" class="btn btn-danger mobile-w-full" routerLink="/dashboard/medicos">Cancelar</button>
-      <button type="submit" class="btn btn-success mobile-w-full" [disabled]="!medicoForm.form.valid">
-        Salvar Médico
-      </button>
-    </div>
-
-  </form>
-</div>
+    </form>
+  </mat-card-content>
+</mat-card>

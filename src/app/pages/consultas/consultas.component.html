@@ -5,114 +5,161 @@
 
 <div class="consulta-grid">
   <!-- AGENDAR -->
-  <div class="glass-card">
-    <h3 class="mb-4">Agendar Consulta</h3>
-    <form (ngSubmit)="agendar()" #agendarForm="ngForm">
-      
-      <div class="form-group">
-        <label class="form-label" for="paciente">Paciente</label>
-        <select id="paciente" name="paciente" class="form-control" [(ngModel)]="agendamento.idPaciente" required>
-          <option [ngValue]="null">Selecione o paciente...</option>
-          <option *ngFor="let pac of pacientes" [ngValue]="pac.id">{{ pac.nome }} (CPF: {{ pac.cpf }})</option>
-        </select>
-      </div>
+  <mat-card class="glass-card">
+    <mat-card-content>
+      <h3 class="mb-4 flex items-center gap-2">
+        <mat-icon color="primary">calendar_month</mat-icon> Agendar Consulta
+      </h3>
+      <form (ngSubmit)="agendar()" #agendarForm="ngForm">
+        
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Paciente</mat-label>
+          <mat-select id="paciente" name="paciente" [(ngModel)]="agendamento.idPaciente" required #pacCtrl="ngModel">
+            <mat-option [value]="null">Selecione o paciente...</mat-option>
+            <mat-option *ngFor="let pac of pacientes" [value]="pac.id">{{ pac.nome }} (CPF: {{ pac.cpf }})</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="pacCtrl.invalid">Selecione um paciente.</mat-error>
+        </mat-form-field>
 
-      <div class="form-group">
-        <label class="form-label" for="medico">Médico (Opcional)</label>
-        <select id="medico" name="medico" class="form-control" [(ngModel)]="agendamento.idMedico">
-          <option [ngValue]="null">Qualquer médico disponível</option>
-          <option *ngFor="let med of medicos" [ngValue]="med.id">{{ med.nome }} - {{ med.especialidade }}</option>
-        </select>
-      </div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Médico (Opcional)</mat-label>
+          <mat-select id="medico" name="medico" [(ngModel)]="agendamento.idMedico">
+            <mat-option [value]="null">Qualquer médico disponível</mat-option>
+            <mat-option *ngFor="let med of medicos" [value]="med.id">{{ med.nome }} - {{ med.especialidade }}</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>medical_services</mat-icon>
+        </mat-form-field>
 
-      <div class="form-group">
-        <label class="form-label" for="data">Data e Hora</label>
-        <input type="datetime-local" id="data" name="data" class="form-control" [(ngModel)]="agendamento.data" required [min]="minDate" #dataCtrl="ngModel" [ngClass]="{'is-invalid': dataCtrl.invalid && (dataCtrl.dirty || dataCtrl.touched)}" />
-        <div class="invalid-feedback" *ngIf="dataCtrl.invalid && (dataCtrl.dirty || dataCtrl.touched)">
-          A data da consulta deve ser no futuro.
-        </div>
-      </div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Data e Hora</mat-label>
+          <input
+            matInput
+            type="datetime-local"
+            id="data"
+            name="data"
+            [(ngModel)]="agendamento.data"
+            required
+            [min]="minDate"
+            #dataCtrl="ngModel"
+          />
+          <mat-icon matPrefix>schedule</mat-icon>
+          <mat-error *ngIf="dataCtrl.invalid">A data da consulta deve ser no futuro.</mat-error>
+        </mat-form-field>
 
-      <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!agendarForm.form.valid || isLoadingA">
-        <span *ngIf="!isLoadingA">Confirmar Agendamento</span>
-        <span *ngIf="isLoadingA">Aguarde...</span>
-      </button>
-    </form>
-  </div>
+        <button mat-flat-button color="primary" type="submit" class="w-full mt-2" [disabled]="!agendarForm.form.valid || isLoadingA">
+          <mat-spinner *ngIf="isLoadingA" diameter="20" color="accent"></mat-spinner>
+          <span *ngIf="!isLoadingA" class="flex items-center justify-center gap-2">
+            <mat-icon>check</mat-icon> Confirmar Agendamento
+          </span>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 
   <!-- CANCELAR -->
-  <div class="glass-card">
-    <h3 class="mb-4 text-danger">Cancelar Consulta</h3>
-    <form (ngSubmit)="cancelar()" #cancelarForm="ngForm">
-      
-      <div class="form-group">
-        <label class="form-label" for="idConsulta">ID da Consulta</label>
-        <input type="number" id="idConsulta" name="idConsulta" class="form-control" [(ngModel)]="cancelamento.idConsulta" required placeholder="Ex: 15" />
-      </div>
+  <mat-card class="glass-card">
+    <mat-card-content>
+      <h3 class="mb-4 text-danger flex items-center gap-2">
+        <mat-icon color="warn">event_busy</mat-icon> Cancelar Consulta
+      </h3>
+      <form (ngSubmit)="cancelar()" #cancelarForm="ngForm">
+        
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>ID da Consulta</mat-label>
+          <input
+            matInput
+            type="number"
+            id="idConsulta"
+            name="idConsulta"
+            [(ngModel)]="cancelamento.idConsulta"
+            required
+            placeholder="Ex: 15"
+            #idConsCtrl="ngModel"
+          />
+          <mat-icon matPrefix>tag</mat-icon>
+          <mat-error *ngIf="idConsCtrl.invalid">Informe o ID da consulta.</mat-error>
+        </mat-form-field>
 
-      <div class="form-group">
-        <label class="form-label" for="motivo">Motivo do Cancelamento</label>
-        <select id="motivo" name="motivo" class="form-control" [(ngModel)]="cancelamento.motivoCancelamento" required>
-          <option value="">Selecione o motivo...</option>
-          <option value="PACIENTE_DESISTIU">Paciente Desistiu</option>
-          <option value="MEDICO_CANCELOU">Médico Cancelou</option>
-          <option value="OUTROS">Outros</option>
-        </select>
-      </div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Motivo do Cancelamento</mat-label>
+          <mat-select id="motivo" name="motivo" [(ngModel)]="cancelamento.motivoCancelamento" required #motCtrl="ngModel">
+            <mat-option value="">Selecione o motivo...</mat-option>
+            <mat-option value="PACIENTE_DESISTIU">Paciente Desistiu</mat-option>
+            <mat-option value="MEDICO_CANCELOU">Médico Cancelou</mat-option>
+            <mat-option value="OUTROS">Outros</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>help_outline</mat-icon>
+          <mat-error *ngIf="motCtrl.invalid">Selecione o motivo.</mat-error>
+        </mat-form-field>
 
-      <button type="submit" class="btn btn-danger btn-block mt-4" [disabled]="!cancelarForm.form.valid || isLoadingC">
-        <span *ngIf="!isLoadingC">Efetuar Cancelamento</span>
-        <span *ngIf="isLoadingC">Aguarde...</span>
-      </button>
-    </form>
-  </div>
+        <button mat-flat-button color="warn" type="submit" class="w-full mt-2" [disabled]="!cancelarForm.form.valid || isLoadingC">
+          <mat-spinner *ngIf="isLoadingC" diameter="20" color="accent"></mat-spinner>
+          <span *ngIf="!isLoadingC" class="flex items-center justify-center gap-2">
+            <mat-icon>cancel</mat-icon> Efetuar Cancelamento
+          </span>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 
 </div>
 
 <!-- LISTAGEM -->
-<div class="glass-card mt-4 p-3 p-md-4">
-  <div class="flex mobile-stack justify-between items-center mb-4">
-    <h3 class="m-0">Últimas Consultas</h3>
-    <button class="btn btn-outline-primary btn-sm mobile-w-full" (click)="carregarConsultas()">Atualizar Lista</button>
-  </div>
-  
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Paciente</th>
-          <th>Médico</th>
-          <th>Data/Hora</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let consulta of consultas">
-          <td>#{{ consulta.id }}</td>
-          <td>{{ consulta.nomePaciente }}</td>
-          <td>{{ consulta.nomeMedico || 'Não Atribuído' }}</td>
-          <td>{{ consulta.dataConsulta | date:'dd/MM/yyyy HH:mm' }}</td>
-        </tr>
-        <tr *ngIf="consultas.length === 0">
-          <td colspan="4" class="text-center text-muted">Nenhuma consulta agendada encontrada.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<mat-card class="glass-card mt-4">
+  <mat-card-content>
+    <div class="flex mobile-stack justify-between items-center mb-4">
+      <h3 class="m-0">Últimas Consultas</h3>
+      <button mat-stroked-button color="primary" class="mobile-w-full" (click)="carregarConsultas()">
+        <mat-icon>refresh</mat-icon> Atualizar Lista
+      </button>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Paciente</th>
+            <th>Médico</th>
+            <th>Data/Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consulta of consultas">
+            <td>#{{ consulta.id }}</td>
+            <td>{{ consulta.nomePaciente }}</td>
+            <td>{{ consulta.nomeMedico || 'Não Atribuído' }}</td>
+            <td>{{ consulta.dataConsulta | date:'dd/MM/yyyy HH:mm' }}</td>
+          </tr>
+          <tr *ngIf="consultas.length === 0">
+            <td colspan="4" class="text-center text-muted">Nenhuma consulta agendada encontrada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
 
 <!-- MODAL DE FEEDBACK -->
 <div class="custom-modal-backdrop" *ngIf="modalVisible">
-  <div class="custom-modal animate-fade-in">
-    <div class="modal-header">
-      <h4 class="m-0" [ngClass]="{'text-danger': modalTitle === 'Erro', 'text-success': modalTitle === 'Sucesso'}">{{ modalTitle }}</h4>
-      <button type="button" class="close-btn" (click)="closeModal()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <p>{{ modalMessage }}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="closeModal()">OK</button>
-    </div>
-  </div>
+  <mat-card class="custom-modal glass-card animate-fade-in">
+    <mat-card-content>
+      <div class="modal-header">
+        <h4 class="m-0 flex items-center gap-2" [ngClass]="{'text-danger': modalTitle === 'Erro', 'text-success': modalTitle === 'Sucesso'}">
+          <mat-icon>{{ modalTitle === 'Erro' ? 'error' : 'check_circle' }}</mat-icon>
+          {{ modalTitle }}
+        </h4>
+        <button mat-icon-button class="close-btn" (click)="closeModal()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body py-3">
+        <p>{{ modalMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button mat-flat-button color="primary" (click)="closeModal()">OK</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

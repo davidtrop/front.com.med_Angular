@@ -34,24 +34,28 @@
   }
 }
 
-.btn-hamburger {
+.user-profile {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 10;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
 }
 
-.btn-hamburger span {
-  width: 2rem;
-  height: 0.25rem;
-  background: var(--text-main);
-  border-radius: 10px;
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.avatar mat-icon {
+  font-size: 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
 .sidebar-backdrop {
@@ -69,4 +73,3 @@
   flex-grow: 1;
   animation: fadeIn 0.4s ease-out;
 }
-

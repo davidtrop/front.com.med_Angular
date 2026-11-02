@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 import { MedicoService } from '../../../core/medico/medico.service';
 import { Medico } from '../../../core/models/medico.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
@@ -8,7 +13,16 @@ import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm
 @Component({
   selector: 'app-medico-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, ConfirmModalComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ConfirmModalComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatCardModule
+  ],
   templateUrl: './medico-list.component.html',
   styleUrls: ['./medico-list.component.css']
 })
